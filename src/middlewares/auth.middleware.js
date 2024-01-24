@@ -11,8 +11,8 @@ try {
         throw new ApiError(401,"Unauthorized Request")
     }
      
-    const decodedToken= jwt.verify(process.env.ACCESS_TOKEN_SECRET)
-    const user=await User.findById(decodedToken?._id).select("-password - refreshToken");
+    const decodedToken= jwt.verify(token,process.env.ACCESS_TOKEN_SECRET)
+    const user=await User.findById(decodedToken?._id).select("-password -refreshToken");
     
     if(!user){
         throw new ApiError(401,"Invalid Access Token")
