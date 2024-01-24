@@ -175,7 +175,8 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 const RefreshToken=asyncHandler(async(req,res)=>{
   
-  const incomingToken=req.cookies?.refreshToken||req.body.refreshToken;
+  try {
+    const incomingToken=req.cookies?.refreshToken||req.body.refreshToken;
   
   if(!incomingToken){
     throw new ApiError(401,"Unauthorized Request");
@@ -211,6 +212,9 @@ const RefreshToken=asyncHandler(async(req,res)=>{
         "AccessToken Refreshed"
       )
     );
+  } catch (error) {
+    throw new ApiError(400,"Login Again")
+  }
 
 })
 export { registerUser, loginUser, logoutUser ,RefreshToken };
